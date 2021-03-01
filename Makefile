@@ -1,4 +1,8 @@
-run: compile; java Frontend; clean
+default: run
+
+run: compile prepareRun clean
+
+prepareRun: javaFrontend
 
 compile: MovieDataReader Backend Frontend
 

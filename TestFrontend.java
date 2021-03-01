@@ -270,7 +270,7 @@ public class TestFrontend {
                 InputStream standardIn = System.in;
                 try {
                         // set the input stream to our input (with an g to test of the program lists genres)
-                        String input = "g" + System.lineSeparator() +  "0" + System.lineSeparator() + "x" + System.lineSeparator() + "x"; 
+                        String input = "g" + System.lineSeparator() +  "1" + System.lineSeparator() + "x" + System.lineSeparator() + "x"; 
                         InputStream inputStreamSimulator = new ByteArrayInputStream(input.getBytes());
                         System.setIn(inputStreamSimulator);
                         ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();

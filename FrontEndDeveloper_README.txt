@@ -1,29 +1,24 @@
 FrontEndDeveloper README for Project One (CS400 @ UW Madison)
 ========================================================
 
-Name of FrontEndDeveloper: <enter your complete name here>
-@wisc.edu Email of FrontEndDeveloper: <enter your @wisc.edu email address here>
-Group: <enter your two letter group name here>
-Team: <enter your team color: red, blue, or purple, here>
+Name of FrontEndDeveloper: Nitit Jongsawatsataporn
+@wisc.edu Email of FrontEndDeveloper: jongsawatsat@wisc.edu
+Group: CG
+Team: red
 
 Files Written by Me:
 --------------------
-<List all files that were within this project that were written by you, and
- include a short description of the purpose that each file servers>
+Frontend:the main interface of the program. This file would initialized the backend and find csv file. Then, it would create the interface and 3 pages. The user will be able to navigate through with the help of explanation on the interface.
+TestFrontend: This class is made to debug the front end. It would test some certain function of Frontend. (Exit, Main Page, Genre Page, Rating Page, Selecting movie)
+
 
 Additional Contributions:
 -------------------------
-<List any additional contributions that you have made toward your team's
- completion of this project.  This might include, but is not limited to things
- like: organizing team communication, creating extra tests or dummy classes,
- assisting team members in any way, etc.>
+Help debuging the backend. Reporting various bugs that cound when using frontend to backend developer.
 
 Signature:
 ----------
-<Type out your full name here to certify that all of the files written by you
- that are listed above are the product of your individual development efforts
- for this programming assignment.  List below your name, any exceptions, for 
- example: work reused from a previous semester, code examples taken from any 
- website or book, or anything that was not explicitly authored by you for
- the purpose of completing this assigned CS400 project.>
+Nitit Jongsawatsataporn
+
+Frontend clear console function is taken from https://stackoverflow.com/questions/2979383/java-clear-the-console
  

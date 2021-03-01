@@ -1,8 +1,8 @@
 default: run
 
-run: compile prepareRun clean
+run: prepareRun clean
 
-prepareRun: java Frontend
+prepareRun: compile; java Frontend
 
 compile: prepareMovieDataReader prepareBackend prepareFrontend
 

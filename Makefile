@@ -6,10 +6,10 @@ compile: MovieDataReader Backend Frontend
 
 test: testData testBackend testFrontend clean
 
-testFrontend: Frontend TestFrontend.class
+testFrontend: compile TestFrontend.class
 	java TestFrontend
 	
-testBackend: Backend TestBackend.class
+testBackend: MovieDataReader Backend TestBackend.class
 	java TestBackend
 	
 testData: MovieDataReader TestMovieAndMovieDataReader.class
@@ -26,7 +26,7 @@ TestMovieAndMovieDataReader.class: TestMovieAndMovieDataReader.java
 	javac TestMovieAndMovieDataReader.java;
 
 # DataSupport
-MovieDataReader: MovieDataReader.class MovieDataReaderInterface.class Movie.class MovieInterface.class
+MovieDataReader: MovieInterface.class MovieDataReaderInterface.class Movie.class  MovieDataReader.class
 
 MovieDataReader.class: MovieDataReader.java
 	javac MovieDataReader.java
@@ -41,7 +41,7 @@ MovieInterface.class: MovieInterface.java
 	javac MovieInterface.java
 	
 # BackendSupport
-Backend: Backend.class MapADT.class BackendHashTable.class BackendInterface.class
+Backend: MapADT.class BackendInterface.class BackendHashTable.class Backend.class
 
 Backend.class: Backend.java
 	javac Backend.java

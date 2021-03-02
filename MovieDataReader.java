@@ -1,3 +1,12 @@
+// --== CS400 File Header Information ==--
+// Name: Nott Laoaron
+// Email: laoaron@wisc.edu
+// Team: Red
+// Group: CG
+// TA: Xi Chen
+// Lecturer: Florian Heimerl
+// Notes to Grader: This is MovieDataReader class
+
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +26,9 @@ public class MovieDataReader implements MovieDataReaderInterface {
      * Format them and return the list of movies
      * @param inputFileReader the file reader that contains the file we will read
      * @return the list of movies that we read from the file
+     * @throws FileNotFoundException when there is an error opening the file of inputFileReader
+     * @throws IOException when there is an error while reading the file
+     * @throws DataFormatException when the data format of the file is invalid
      */
     @Override
 	public List<Movie> readDataSet(Reader inputFileReader) throws FileNotFoundException, IOException, DataFormatException {

@@ -38,6 +38,16 @@ public class TestMovieAndMovieDataReader {
 		} else {
 			System.out.println("Test movie order: FAILED");
 		}
+		if (this.testGenreSize()) {
+			System.out.println("Test genre size: PASSED");
+		}else{
+		       	System.out.println("Test genre size: FAILED");
+		}
+		if (this.testGenreContent()) {
+			System.out.println("Test genre content: PASSED");
+		}else{
+		       	System.out.println("Test genre content: FAILED");
+		}
 	}
 	
 	/**
@@ -131,7 +141,7 @@ public class TestMovieAndMovieDataReader {
 		}
 		Collections.sort(movieList);
 		double lastRating = 11.0;
-		for (MovieInterface movie : movieList) {
+		for (Movie movie : movieList) {
 			if (movie.getAvgVote() > lastRating) {
 				// test fails
 				return false;
@@ -143,5 +153,75 @@ public class TestMovieAndMovieDataReader {
 	}
 	
 	// TODO: Data Wrangler, add at least 2 more tests
-
+	/**
+	 * This test reads in 3 movies. It then checks whether each movies 
+	 * whether each movies contain genre with correct size.
+	 * @return true if the test passed, false otherwise
+	 */
+	public boolean testGenreSize() {
+		List<Movie> movieList;
+		try {
+			movieList = readerToTest.readDataSet(new StringReader(
+					"title,original_title,year,genre,duration,country,language,director,writer,production_company,actors,description,avg_vote\n"
+					+ "The Source of Shadows,The Source of Shadows,2020,Horror,83,USA,English,\"Ryan Bury, Jennifer Bonior\",\"Jennifer Bonior, Trevor Botkin\",Four Thieves Productions,\"Ashleigh Allard, Tom Bonington, Eliane Gagnon, Marissa Kaye Grinestaff, Jenna Heffernan, Joshua Hummel, Janice Kingsley, Chris Labasbas, Jared Laufree, Dominic Lee, Vic May, Sienna Mazzone, Lizzie Mounter, Grace Mumm, Ashley Otis\",\"A series of stories woven together by one of our most primal fears, the fear of the unknown.\",3.5\n"
+					+ "The Insurrection,The Insurrection,2020,Action,90,USA,English,Rene Perez,Rene Perez,,\"Michael Paré, Wilma Elles, Joseph Camilleri, Rebecca Tarabocchia, Jeanine Harrington, Malorie Glavan, Danner Boyd, Michael Cendejas, Woody Clendenen, Keely Dervin, Aaron Harvey, Tony Jackson, Michael Jarrod, Angelina Karo, Bernie Kelly\",The director of the largest media company wants to expose how left-wing powers use film to control populations.,2.9\n"
+					+ "Valley Girl,Valley Girl,2020,\"Comedy, Musical, Romance\",102,USA,English,Rachel Lee Goldenberg,\"Amy Talkington, Andrew Lane\",Sneak Preview Productions,\"Jessica Rothe, Josh Whitehouse, Jessie Ennis, Ashleigh Murray, Chloe Bennet, Logan Paul, Mae Whitman, Mario Revolori, Rob Huebel, Judy Greer, Alex Lewis, Alex MacNicoll, Danny Ramirez, Andrew Kai, Allyn Rachel\",\"Set to a new wave '80s soundtrack, a pair of young lovers from different backgrounds defy their parents and friends to stay together. A musical adaptation of the 1983 film.\",5.4\n"
+			));
+		} catch (Exception e) {
+			e.printStackTrace();
+			// test failed
+			return false;
+		}
+		// test passes
+		String title[] = {"The Source of Shadows", "The Insurrection", "Valley Girl"};
+		ArrayList<String>[] genre = (ArrayList<String>[]) new ArrayList[3];
+		for(int i = 0; i < 3; ++i) genre[i] = new ArrayList<String>();
+		genre[0].add("Horror");
+		genre[1].add("Action");
+		genre[2].add("Comedy");
+		genre[2].add("Musical");
+		genre[2].add("Romance");
+		for(Movie movie : movieList){
+			for(int i = 0; i < 3; ++i){
+				if(title[i].equals(movie.getTitle())){
+					if(movie.getGenres().size() != genre[i].size()) return false;
+					break;
+				}
+			}
+		}
+		return true;
+	}
+	public boolean testGenreContent() {
+		List<Movie> movieList;
+		try {
+			movieList = readerToTest.readDataSet(new StringReader(
+					"title,original_title,year,genre,duration,country,language,director,writer,production_company,actors,description,avg_vote\n"
+					+ "The Source of Shadows,The Source of Shadows,2020,Horror,83,USA,English,\"Ryan Bury, Jennifer Bonior\",\"Jennifer Bonior, Trevor Botkin\",Four Thieves Productions,\"Ashleigh Allard, Tom Bonington, Eliane Gagnon, Marissa Kaye Grinestaff, Jenna Heffernan, Joshua Hummel, Janice Kingsley, Chris Labasbas, Jared Laufree, Dominic Lee, Vic May, Sienna Mazzone, Lizzie Mounter, Grace Mumm, Ashley Otis\",\"A series of stories woven together by one of our most primal fears, the fear of the unknown.\",3.5\n"
+					+ "The Insurrection,The Insurrection,2020,Action,90,USA,English,Rene Perez,Rene Perez,,\"Michael Paré, Wilma Elles, Joseph Camilleri, Rebecca Tarabocchia, Jeanine Harrington, Malorie Glavan, Danner Boyd, Michael Cendejas, Woody Clendenen, Keely Dervin, Aaron Harvey, Tony Jackson, Michael Jarrod, Angelina Karo, Bernie Kelly\",The director of the largest media company wants to expose how left-wing powers use film to control populations.,2.9\n"
+					+ "Valley Girl,Valley Girl,2020,\"Comedy, Musical, Romance\",102,USA,English,Rachel Lee Goldenberg,\"Amy Talkington, Andrew Lane\",Sneak Preview Productions,\"Jessica Rothe, Josh Whitehouse, Jessie Ennis, Ashleigh Murray, Chloe Bennet, Logan Paul, Mae Whitman, Mario Revolori, Rob Huebel, Judy Greer, Alex Lewis, Alex MacNicoll, Danny Ramirez, Andrew Kai, Allyn Rachel\",\"Set to a new wave '80s soundtrack, a pair of young lovers from different backgrounds defy their parents and friends to stay together. A musical adaptation of the 1983 film.\",5.4\n"
+			));
+		} catch (Exception e) {
+			e.printStackTrace();
+			// test failed
+			return false;
+		}
+		// test passes
+		String title[] = {"The Source of Shadows", "The Insurrection", "Valley Girl"};
+		ArrayList<String>[] genre = (ArrayList<String>[]) new ArrayList[3];
+		for(int i = 0; i < 3; ++i) genre[i] = new ArrayList<String>();
+		genre[0].add("Horror");
+		genre[1].add("Action");
+		genre[2].add("Comedy");
+		genre[2].add("Musical");
+		genre[2].add("Romance");
+		for(Movie movie : movieList){
+			for(int i = 0; i < 3; ++i){
+				if(title[i].equals(movie.getTitle())){
+					if(genre[i].equals(movie.getGenres())==false) return false;
+					break;
+				}
+			}
+		}
+		return true;
+	}
 }

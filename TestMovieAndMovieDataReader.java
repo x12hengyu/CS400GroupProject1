@@ -1,6 +1,7 @@
 import java.io.StringReader;
 import java.util.Collections;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * This class contains a set of tests for the MovieInterface and MovieDataReaderInterface

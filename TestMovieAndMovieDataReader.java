@@ -192,6 +192,11 @@ public class TestMovieAndMovieDataReader {
 		}
 		return true;
 	}
+	/**
+	 * This test reads in 3 movies. It then checks whether each movies 
+	 * whether each movies contain correct genres
+	 * @return true if the test passed, false otherwise
+	 */
 	public boolean testGenreContent() {
 		List<Movie> movieList;
 		try {

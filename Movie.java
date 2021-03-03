@@ -16,27 +16,29 @@ import java.util.List;
  * @author Nott Laoaron (Data Wrangler)
  */
 public class Movie implements MovieInterface {
-    // 0 = title
-    // 1 = original_title
-    // 2 = year
-    // 3 = genre
-    // 4 = duration
-    // 5 = country
-    // 6 = language
-    // 7 = director
-    // 8 = writer
-    // 9 = production_company
-    // 10 = actors
-    // 11 = description
-    // 12 = avg_vote
-    private ArrayList<String>[] data;
+    private ArrayList<String> genre = new ArrayList<String>();
+    private String description, title, director;
+    private int year;
+    private Float avg_vote;
 	
     /**
      * The constructor of this class
      * @param data the list of data of a movie
      */
-    Movie(ArrayList<String>[] data){
-        this.data = data;
+    Movie(String[] data){
+        // 0 = title
+        // 1 = year
+        // 2 = genre
+        // 3 = director
+        // 4 = description
+        // 5 = avg_vote
+        title = data[0];
+        year = Integer.parseInt(data[1]);
+        String[] tmp = data[2].replaceAll("\"", "").split(", ");
+        for(String it : tmp) genre.add(it);
+        director = data[3].replaceAll("\"","");
+        description = data[4];
+        avg_vote = Float.parseFloat(data[5]);
     }
 	
     /**
@@ -45,7 +47,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public String getTitle(){
-        return data[0].get(0);
+        return title;
     }
 	
     /**
@@ -54,7 +56,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public Integer getYear(){
-        return Integer.parseInt(data[2].get(0));
+        return year;
     }
 	
     /**
@@ -63,7 +65,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public List<String> getGenres(){
-        return data[3];
+        return genre;
     }
 	
     /**
@@ -72,7 +74,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public String getDirector(){
-        return data[7].get(0);
+        return director;
     }
 	
     /**
@@ -81,11 +83,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public String getDescription(){
-        String fullDescription = "";
-        for(String cur: data[11 ]) {
-          fullDescription += cur;
-        }
-        return fullDescription;
+        return description;
     }
 	
     /**
@@ -94,7 +92,7 @@ public class Movie implements MovieInterface {
      */
     @Override
 	public Float getAvgVote(){
-        return Float.parseFloat(data[12].get(0));
+        return avg_vote;
     }
 	
 	// from super interface Comparable

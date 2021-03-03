@@ -34,61 +34,66 @@ public class MovieDataReader implements MovieDataReaderInterface {
 	public List<Movie> readDataSet(Reader inputFileReader) throws FileNotFoundException, IOException, DataFormatException {
         List<Movie> container = new ArrayList<Movie>();
         try{
-            // read file
-            //inputFileReader = new FileReader("movies.csv");
+            String line; // String of a line parsing from the reader
+            String[] seq; // The seqence of strings after we split variable "line"
+            int[] idx = new int[6]; // (title,year,genres,director,description,avg_vote)
+            String[] header = new String[]{"title","year","genre","director","description","avg_vote"};
+            // read first line
+            line = readLine(inputFileReader);
+            if(line == null) throw new DataFormatException("No first column");
+            seq = line.split(",");
+            for(int i = 0; i < seq.length; ++i){
+                for(int j = 0; j < i; ++j){
+                    if(seq[i].equals(seq[j])){
+                        throw new DataFormatException("Duplicate Columns");
+                    }
+                }
+            }
+            int total_col = seq.length;
+            // find index for each category
+            for(int i = 0; i < 6; ++i) idx[i] = -1;
+            for(int i = 0; i < seq.length; ++i){
+                for(int j = 0; j < 6; ++j){
+                    if(seq[i].equals(header[j])) idx[j] = i;
+                }
+            }
+            for(int i = 0; i < 6; ++i){
+                if(idx[i] == -1){
+                    throw new DataFormatException("Important column missing: "+header[i]);
+                }
+            }
             // read the entire line
             // and then attempt to parse them
-            // Note: This procedure ignores the first line of the input
-            int v;
-            String line = "";
-            boolean firstline = true;
-            int row = 1;
-            while((v = inputFileReader.read())!=-1){
-                if((char)v == '\n'){
-                    if(!firstline){
-                        ArrayList<String>[] raw_data = (ArrayList<String>[]) new ArrayList[13];
-                        for(int i = 0; i < 13; ++i) raw_data[i] = new ArrayList<String>();
-                        int cur = 0;
-                        String[] sp = line.split(",(\\s)*");
-                        int len = sp.length;
-                        /*
-                        for(int i = 0; i < len; ++i){
-                            System.out.print(sp[i]);
-                            System.out.print("||");
-                        }
-                        System.out.println();
-                        */
-                        for(int i = 0; i < len; ++i){
-                            if(cur > 12){
-                                throw new DataFormatException("Too many columns");
-                            }
-                            if(!sp[i].isEmpty() && sp[i].charAt(0) == '\"'){
-                                int j;
-                                for(j = i; j < len && sp[j].charAt(sp[j].length()-1) != '\"'; ++j);
-                                if(i == j){
-                                    raw_data[cur].add(sp[i].substring(1, sp[i].length()-1));
-                                }else{
-                                    raw_data[cur].add(sp[i].substring(1));
-                                    for(int k = i+1; k < j; ++k){
-                                        raw_data[cur].add(sp[k]);
-                                    }
-                                    raw_data[cur].add(sp[j].substring(0, sp[j].length()-1));
+            while((line = readLine(inputFileReader)) != null){
+                seq = line.split(",");
+                ArrayList<String> sep = new ArrayList<String>();
+                for(int i = 0; i < seq.length; ++i){
+                    String col = "";
+                    if(seq[i].length() != 0){
+                        if(seq[i].charAt(0)=='\"'){
+                            int j;
+                            for(j = i; j < seq.length; ++j){
+                                col += seq[j];
+                                if(seq[j].charAt(seq[j].length()-1)=='\"'){
+                                    break;
                                 }
-                                i = j;
-                                ++cur;
-                            }else{
-                                raw_data[cur++].add(sp[i]);
+                                col += ',';
                             }
+                            i = j;
+                        }else{
+                            col = seq[i];
                         }
-                        // add the input into the container
-                        container.add(new Movie(raw_data));
                     }
-                    firstline = false;
-                    line = "";
-                    row++;
-                }else{
-                    line += (char)v;
+                    sep.add(col);
                 }
+                if(sep.size() != total_col){
+                    throw new DataFormatException("Some rows has less or more column than the first row");
+                }
+                String[] pass = new String[6];
+                for(int i = 0; i < 6; ++i){
+                    pass[i] = sep.get(idx[i]);
+                }
+                container.add(new Movie(pass));
             }
             inputFileReader.close();
         }catch(FileNotFoundException e){
@@ -97,6 +102,23 @@ public class MovieDataReader implements MovieDataReaderInterface {
         }catch(IOException e){
             throw new IOException("IO Exception Error");
         }
-        return (List<Movie>) (List<? extends Movie>) container;
+        return container;
+    }
+    
+    /**
+     * A helper method that helps reading a line from input
+     * of reader
+     * @param reader the reader
+     * @return the next single line if available, or null if otherwise
+     */
+    String readLine(Reader inputFileReader) throws IOException {
+        int v;
+        String ans = "";
+        while((v = inputFileReader.read())!=-1){
+            if(v == 13) continue;
+            if((char)v == '\n') return ans;
+            ans += (char)v;
+        }
+        return null;
     }
 }
